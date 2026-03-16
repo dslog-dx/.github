@@ -1,0 +1,101 @@
+name: 🐛 バグ報告
+description: バグを報告する
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        バグ報告ありがとうございます。以下の情報を記入してください。
+
+  # 1. バグの説明（description）
+  - type: textarea
+    id: description
+    attributes:
+      label: バグの説明
+      description: バグの内容を詳しく説明してください
+      placeholder: できるだけ具体的に記述してください
+    validations:
+      required: true
+  # 2. 再現手順（reproduction）
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 再現手順
+      description: バグを再現するための手順を記述してください
+      placeholder: |
+        1. '...' に移動
+        2. '....' をクリック
+        3. '....' までスクロール
+        4. エラーが発生
+    validations:
+      required: true
+
+  # 3.期待する動作（expected）
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する動作
+      description: 本来期待される動作を記述してください
+      placeholder: 正常に動作する場合は〜が表示されるはずでした など
+    validations:
+      required: true
+
+  # 4. 現時点で思いつく原因・解決策（optional_solutions）
+  - type: textarea
+    id: optional_solutions
+    attributes:
+      label: 現時点で思いつく原因・解決策（任意）
+      description: このバグが発生した原因や修正のアイデアなど現時点で思いついていれば記入してください
+      placeholder: この変数がnullの可能性があると思われます、turbo-streamをfalseと明示すると治りそう など
+    validations:
+      required: false
+
+  # 5. 発生頻度（frequency）
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: 発生頻度
+      description: このバグがどれくらいの頻度で発生しますか？
+      options:
+        - 毎回発生する（Always）
+        - 時々発生する（Sometimes）
+        - 1回だけ発生した（Once）
+        - 不明（Not sure）
+    validations:
+      required: false
+   # 6. 利用環境（environment）
+  - type: input
+    id: environment
+    attributes:
+      label: 利用環境（OS、端末など）
+      description: 使用しているOSや端末の情報（例 macOS 14 / Windows 11 / iPhone 15 + iOS 17など）を記載してください
+      placeholder: Windows 11 + Edge, iPhone 13 + Safari
+    validations:
+      required: false
+  # 7. 該当バージョン（version）
+  - type: input
+    id: version
+    attributes:
+      label: 該当バージョン
+      description: アプリやライブラリ、ブラウザのバージョンなど（あれば）
+      placeholder:  v1.2.3、Chrome 125.0.0.1
+    validations:
+      required: false
+  # 8. スクリーンショット（screenshot）
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: スクリーンショット・動画（任意）
+      description: 問題がわかる画像や動画があれば、ここに貼り付けてください
+      placeholder: スクリーンショットをここに貼り付けてください
+    validations:
+      required: false
+  # 9. ログ（logs）
+  - type: textarea
+    id: logs
+    attributes:
+      label: エラーログ・コンソール出力（任意）
+      description: 開発者ツールのコンソールログやネットワークエラーなどがあれば貼り付けてください
+      placeholder:  Uncaught TypeError Cannot read properties of undefined...
+    validations:
+      required: false
