@@ -1,0 +1,49 @@
+name: 🏗️ 【新規開発】画面・大型機能
+description: ゼロから構築する際の「親Issue」。ここからサブイシューを切り出します。
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        新画面や新プロジェクトの立ち上げ用です。
+        PMまたはエンジニアが「全体像」を立て、エンジニアが「サブイシュー」へ分解して進めます。
+
+  - type: input
+    id: screen_name
+    attributes:
+      label: 💻 開発対象（画面名・機能名）
+      placeholder: 例：【新規】ログ詳細画面、など
+    validations:
+      required: true
+
+  - type: textarea
+    id: requirements
+    attributes:
+      label: 📝 達成したいこと・主要要件
+      description: この画面でユーザーが何ができる必要があるか。
+      placeholder: |
+        - 〇〇のデータを表示する
+        - 編集ボタンから編集画面へ遷移する
+        - 保存時にバリデーションをかける
+    validations:
+      required: true
+
+  - type: input
+    id: reference_url
+    attributes:
+      label: 🔗 参考資料（Figma / Notionなど）
+      description: デザインや仕様のメモがあればURLを。
+    validations:
+      required: false
+
+  - type: textarea
+    id: sub_issue_plan
+    attributes:
+      label: 🛠️ サブイシュー展開用（エンジニア記入欄）
+      description: |
+        エンジニアの方は、ここでタスクを洗い出し、右側の「Issueに変換」ボタンからサブイシューを作成してください。
+      value: |
+        ### 開発タスク（ここからサブイシュー化）
+        - [ ] 
+    validations:
+      required: false
