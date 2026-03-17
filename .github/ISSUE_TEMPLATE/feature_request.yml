@@ -1,43 +1,38 @@
-name: ✨ 機能・改善要望
-description: 新機能の提案や既存機能の改善案
+name: ✨ 機能追加・改善
+description: 運用中のシステムへの変更依頼
 labels: ["enhancement"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        新機能のアイデアや改善の提案ありがとうございます！
-        チームで検討するため、以下の情報を教えてください。
-
   - type: textarea
-    id: problem
+    id: current_status
     attributes:
-      label: 背景・現状の課題
-      description: なぜこの機能が必要だと思いましたか？今困っていることや、もっとこうなれば良いと思う点を教えてください。
-      placeholder: 例：現在のログ一覧では特定の日付を探すのに時間がかかるため、フィルター機能が欲しい。
+      label: 現状
+      description: 今はどうなっているか、どこの箇所の話かを簡潔に。
+      placeholder: 例：設定画面のログアウトボタンが一番下に配置されている。
     validations:
       required: true
 
   - type: textarea
-    id: solution
+    id: request_detail
     attributes:
-      label: 理想の動作・解決案
-      description: 具体的にどのような機能や挙動を期待していますか？
-      placeholder: 例：画面右上にカレンダーアイコンを追加し、日付を選択できるようにしたい。
+      label: 変更・追加したい内容
+      description: 具体的にどう変えたいか。
+      placeholder: 例：誤操作を防ぐために、ボタンの色を赤色に変更し、確認ダイアログを出したい。
     validations:
       required: true
 
   - type: textarea
-    id: alternatives
+    id: priority_reason
     attributes:
-      label: 代替案（もしあれば）
-      description: 他に検討した方法や、現在はどのように対応しているかなど。
+      label: 理由・優先度
+      description: なぜ今これが必要か（ユーザー要望、不便、など）。
+      placeholder: 例：誤ってログアウトしてしまうという声が社内で多いため。
     validations:
       required: false
 
   - type: textarea
-    id: notes
+    id: reference
     attributes:
-      label: 備考
-      description: 参考にしている他社アプリの挙動や、手書きのラフ案などがあれば。
+      label: 参考（画像やリンク）
+      description: 関連するNotionのメモや、Figma、手書きのキャプチャなど。
     validations:
       required: false
