@@ -9,29 +9,38 @@ on:
         required: true
 
 jobs:
-  sync:
+  notion-sync:
     runs-on: ubuntu-latest
     steps:
+      # 1. 共通スクリプトが入っている .github リポジトリをチェックアウト
       - name: Checkout .github repo
         uses: actions/checkout@v4
         with:
-          repository: dslog-dx/.github
+          # 自動的に組織名を取得して .github リポジトリを指定します
+          repository: ${{ github.repository_owner }}/.github
+          path: .github-repo
+          # 他のリポジトリから読み込むために標準のTokenを使用
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
+      # 2. 最新の Node.js 環境を用意
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
-      - name: Install Notion SDK
-        run: npm install @notionhq/client
+      # 3. Notion操作に必要なライブラリをインストール
+      - name: Install Dependencies
+        run: |
+          cd .github-repo
+          npm install @notionhq/client
 
+      # 4. JavaScriptを実行してNotionと同期
       - name: Run Sync Script
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-          # 実行中のリポジトリ情報を渡す
           REPO_NAME: ${{ github.event.repository.name }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
-          ISSUE_STATE: ${{ github.event.issue.state }} # open か closed
-        run: node scripts/notion-sync.js
+          ISSUE_STATE: ${{ github.event.issue.state }}
+        run: node .github-repo/scripts/notion-sync.js
