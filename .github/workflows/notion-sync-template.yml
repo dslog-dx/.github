@@ -28,13 +28,14 @@ jobs:
         with:
           node-version: '24'
 
-      # 3. Notion操作に必要なライブラリをインストール
+      # 3. 依存ライブラリのインストール
       - name: Install Dependencies
         run: |
           cd .github-repo
+          npm init -y
           npm install @notionhq/client
 
-      # 4. JavaScriptを実行してNotionと同期
+      # 4. スクリプトの実行
       - name: Run Sync Script
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
@@ -43,4 +44,7 @@ jobs:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
           ISSUE_STATE: ${{ github.event.issue.state }}
-        run: node .github-repo/scripts/notion-sync.js
+        # node_modules があるディレクトリに移動してから実行する
+        run: |
+          cd .github-repo
+          node scripts/notion-sync.js
