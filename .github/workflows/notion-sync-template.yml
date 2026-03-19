@@ -1,0 +1,39 @@
+name: Reusable Notion Sync
+
+# 外部から呼び出されるための設定
+on:
+  workflow_call:
+    secrets:
+      NOTION_API_KEY:
+        required: true
+      NOTION_DATABASE_ID:
+        required: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Data to Notion
+        env:
+          NOTION_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DB: ${{ secrets.NOTION_DATABASE_ID }}
+          # 呼び出し元リポジトリのIssue情報を受け取る
+          TITLE: ${{ github.event.issue.title }}
+          URL: ${{ github.event.issue.html_url }}
+          REPO: ${{ github.repository }}
+        run: |
+          curl -X POST "https://api.notion.com/v1/pages" \
+            -H "Authorization: Bearer $NOTION_KEY" \
+            -H "Content-Type: application/json" \
+            -H "Notion-Version: 2022-06-28" \
+            --data "{
+              \"parent\": { \"database_id\": \"$NOTION_DB\" },
+              \"properties\": {
+                \"タスク名\": {
+                  \"title\": [{ \"text\": { \"content\": \"[$REPO] $TITLE\" } }]
+                },
+                \"備考\": {
+                  \"rich_text\": [{ \"text\": { \"content\": \"GitHub URL: $URL\" } }]
+                }
+              }
+            }"
