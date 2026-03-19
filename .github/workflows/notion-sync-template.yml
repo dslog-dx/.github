@@ -1,6 +1,5 @@
 name: Reusable Notion Sync
 
-# 外部から呼び出されるための設定
 on:
   workflow_call:
     secrets:
@@ -13,27 +12,26 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Data to Notion
+      - name: Checkout .github repo
+        uses: actions/checkout@v4
+        with:
+          repository: あなたのOrganization名/.github # 自分のJSファイルを読み込むため
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Notion SDK
+        run: npm install @notionhq/client
+
+      - name: Run Sync Script
         env:
-          NOTION_KEY: ${{ secrets.NOTION_API_KEY }}
-          NOTION_DB: ${{ secrets.NOTION_DATABASE_ID }}
-          # 呼び出し元リポジトリのIssue情報を受け取る
-          TITLE: ${{ github.event.issue.title }}
-          URL: ${{ github.event.issue.html_url }}
-          REPO: ${{ github.repository }}
-        run: |
-          curl -X POST "https://api.notion.com/v1/pages" \
-            -H "Authorization: Bearer $NOTION_KEY" \
-            -H "Content-Type: application/json" \
-            -H "Notion-Version: 2022-06-28" \
-            --data "{
-              \"parent\": { \"database_id\": \"$NOTION_DB\" },
-              \"properties\": {
-                \"タスク名\": {
-                  \"title\": [{ \"text\": { \"content\": \"[$REPO] $TITLE\" } }]
-                },
-                \"備考\": {
-                  \"rich_text\": [{ \"text\": { \"content\": \"GitHub URL: $URL\" } }]
-                }
-              }
-            }"
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          # 実行中のリポジトリ情報を渡す
+          REPO_NAME: ${{ github.event.repository.name }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_STATE: ${{ github.event.issue.state }} # open か closed
+        run: node scripts/notion-sync.js
