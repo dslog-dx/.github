@@ -15,7 +15,7 @@ jobs:
       - name: Checkout .github repo
         uses: actions/checkout@v4
         with:
-          repository: あなたのOrganization名/.github # 自分のJSファイルを読み込むため
+          repository: dslog-dx/.github
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
