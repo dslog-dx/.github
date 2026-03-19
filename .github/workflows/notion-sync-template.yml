@@ -32,7 +32,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd .github-repo
-          npm init -y
+          # npm init を使わず、直接インストールすることでフォルダ名の制約を回避
           npm install @notionhq/client
 
       # 4. スクリプトの実行
@@ -44,7 +44,6 @@ jobs:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
           ISSUE_STATE: ${{ github.event.issue.state }}
-        # node_modules があるディレクトリに移動してから実行する
         run: |
           cd .github-repo
           node scripts/notion-sync.js
