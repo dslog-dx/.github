@@ -33,7 +33,7 @@ body:
       label: 利用環境・バージョン
       placeholder: iOS 17 (iPhone 15), v1.0.2 など
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: screenshots
